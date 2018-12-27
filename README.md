@@ -12,4 +12,18 @@ The DataDep would define the root of the path.
 
 When asked for a file (or directory) within that DataDep root,
 
+## Examples
 
+### Example 1, Simple
+
+```julia
+register(
+  DataDependency(
+    "Root", # i.e. name in current DataDeps.jl
+    "Message", # The message is only displayed, if the root local directory is empty,
+  )
+)
+
+DataDepPath()
+
+```
