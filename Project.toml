@@ -1,0 +1,8 @@
+name = "DataDepsPaths"
+uuid = "6a69ddaa-09dc-11e9-0f01-a9e83de14ac3"
+authors = ["Lyndon White <lyndon.white@invenialabs.co.uk>"]
+version = "0.1.0"
+
+[deps]
+DataDeps = "124859b0-ceae-595e-8997-d05f6a7a8dfe"
+FilePathsBase = "48062228-2e41-5def-b9a4-89aafe57970f"
