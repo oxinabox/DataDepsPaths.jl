@@ -11,6 +11,9 @@ Completely resolved lazily
 The DataDep would define the root of the path.
 
 When asked for a file (or directory) within that DataDep root,
+it would look for a satisfier (matching selecting the first that matches),
+then execute it.
+
 
 ## Examples
 
