@@ -34,4 +34,38 @@ DataDependency(
 
 
 #######################################################
+# Fake example
 
+
+
+
+DataDependency(
+    "Fake example",
+    """
+        - AyeDir # This is a zip archieve that must be extracted
+               - ayefile.csv
+               - beefile.csv
+        - BeeDir
+               - x.txt
+               - y.txt
+               - z.txt
+        - cee.txt
+    """,
+    
+    "AyeDir" => Resolver("http://example.com/Aye.zip", unpack),
+    "BeeDir" => [
+        "x.txt" => Resolver("http://example.com/x.txt"),
+        "y.txt" => Resolver("http://example.com/y.txt"),
+        "z.txt" => Resolver("http://example.com/z.txt"),
+    ],
+    "cee.txt" => Resolver("http://example.com/cee.txt")
+))
+
+@test isfile(DataDepPath("Fake example/AyeDir/ayefile.csv"))
+@test isfile(DataDepPath("Fake example/AyeDir/beefile.csv"))
+
+@test isfile(DataDepPath("Fake example/BeeDir/x.csv"))
+@test isfile(DataDepPath("Fake example/BeeDir/y.csv"))
+@test isfile(DataDepPath("Fake example/BeeDir/z.csv"))
+
+@test isfile(DataDepPath("Fake example/Cee.txt"))
