@@ -28,7 +28,7 @@ function satisfy(datadep::DataDependency, dd_path::DataDepPath)
         # because we also need to do things like
         # if we request `A/
     end
-
+end
 include("multistage_resolution.jl")
 
 end # module
