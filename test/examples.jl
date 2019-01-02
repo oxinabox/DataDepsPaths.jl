@@ -6,24 +6,8 @@ const TESTLABELS = "t10k-labels-idx1-ubyte.gz"
 const BASEURL = "http://yann.lecun.com/exdb/mnist/"
 
 DataDependency(
-    "MNIST",
-    """
-    Dataset: THE MNIST DATABASE of handwritten digits
-    Authors: Yann LeCun, Corinna Cortes, Christopher J.C. Burges
-    Website: http://yann.lecun.com/exdb/mnist/
-    [LeCun et al., 1998a]
-        Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner.
-        "Gradient-based learning applied to document recognition."
-        Proceedings of the IEEE, 86(11):2278-2324, November 1998
-    The files are available for download at the offical
-    website linked above. Note that using the data
-    responsibly and respecting copyright remains your
-    responsibility. The authors of MNIST aren't really
-    explicit about any terms of use, so please read the
-    website to make sure you want to download the
-    dataset.
-    """,
-    
+    "MNIST-static",
+    "Dataset: THE MNIST DATABASE of handwritten digits\nAuthors: Yann LeCun, Corinna Cortes, Christopher J.C. Burges\n Website: http://yann.lecun.com/exdb/mnist/ \n[LeCun et al., 1998a] \n\t Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. \n\t\"Gradient-based learning applied to document recognition.\" \n\tProceedings of the IEEE, 86(11):2278-2324, November 1998 \n\n The files are available for download at the offical website linked above. Note that using the data responsibly and respecting copyright remains your responsibility. The authors of MNIST aren't really explicit about any terms of use, so please read the website to make sure you want to download the dataset.",        
     TRAINIMAGES => Resolver(joinpath(BASEURL, TRAINIMAGES)),
     TRAINLABELS => Resolver(joinpath(BASEURL, TRAINLABELS)),
     TESTIMAGES => Resolver(joinpath(BASEURL, TESTIMAGES)),
@@ -31,6 +15,12 @@ DataDependency(
 ))
 
 # Resolver(rpath::Union{AbstractString,AbstactPath}) = Resolver(lpath -> download(rpath, lpath))
+
+DataDependency(
+    "MNIST-dynamic",
+    "Dataset: THE MNIST DATABASE of handwritten digits\nAuthors: Yann LeCun, Corinna Cortes, Christopher J.C. Burges\n Website: http://yann.lecun.com/exdb/mnist/ \n[LeCun et al., 1998a] \n\t Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner. \n\t\"Gradient-based learning applied to document recognition.\" \n\tProceedings of the IEEE, 86(11):2278-2324, November 1998 \n\n The files are available for download at the offical website linked above. Note that using the data responsibly and respecting copyright remains your responsibility. The authors of MNIST aren't really explicit about any terms of use, so please read the website to make sure you want to download the dataset.",    
+    fn -> Resolver(joinpath(BASEURL, fn)),
+))
 
 
 #######################################################
