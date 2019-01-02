@@ -44,6 +44,7 @@ function SatisfierLookup(satisfiers)
     return SatisfierLookup(statics, dynamic)
 end
 
+# For "parsing" registration blocks
 Base.convert(::Type{AbstractResolver}, xs::Union{Vector,Tuple}) = SatisfierLookup(xs)
 
 ###########################################
@@ -54,6 +55,29 @@ Base.getindex(sl::SatisfierLookup{Nothing}, partpath) = sl.statics[partpath]
 # There is a dynamic satisfier, so that is our fallback.
 Base.getindex(sl::SatisfierLookup, partpath) = get(()->sl.dynamic[partpath], sl, partpath)
 
+
+# TODO: are these keys useful anyway?
+Base.keys(sl::SatisfierLookup) = keys(sl.statics)
+Base.haskey(sl::SatisfierLookup{Nothing}, key) = haskey(sl.statics, key)
+Base.haskey(sl::SatisfierLookup, key) = true # It has a dynamic satisfier, so everything is found
+
+################
+
+"""
+    (sl::SatisfierLookup)(localdir)
+
+Resolve all the static satisfiers contained within this SatisfierLookup
+"""
+function (sl::SatisfierLookup)(localdir)
+    map(keys(sl.statics)) do pathpart
+        # Request the resolution of each of the keys in turn
+        resolve(sl, localdir, pathpart)
+    end
+end
+
+
+
+##########################################
 
 
 
@@ -71,7 +95,7 @@ function resolve(satisfier_lookup::SatisfierLookup, localdir, pathparts_head, pa
     # and looking up the subresolvers
     subresolver = satisfier_lookup[pathparts_head]
     subdir = mkpath(joinpath(localdir, pathparts_head))
-    return resolve(subresolver, subdir, pathparts_tail)
+    return resolve(subresolver, subdir, pathparts_tail...)
 end
 
 
