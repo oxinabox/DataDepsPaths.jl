@@ -313,3 +313,24 @@ From a thread in #dataToday at 2:13 PMView reply
 ### Lyndon White [2:31 PM]
 3. to support downloading files with remote name dependent on (runtime) local name (dynamic satisfiers)
 Ok, I am going to dump this discussion into a markdown file on github. Thanks a bunch
+
+
+# Multistep experiments as paths
+
+One can also basically treat multistep experiments
+as a datadeppath.
+
+That can be resumed at any stage.
+
+```
+DataDepPathRegistration(
+     "sci/raw"=>()-download("http://raw.example.com")
+     "sci/model" => ()->bson("model.bson", train(model, (datadep"sci/raw/train.csv"))
+     "sci/results" => ()->save("res.csv", evaluate(BSON.load(datadep("sci/model/model.bson", datadep"sci/raw/test.csv")
+     "sci/analysis" => ()->generate_plots(".", datadep"sci/results/res.csv")
+)
+```
+
+If you change one part you can just delete all later parts and then call
+`display("text/svg", datadep"sci/analysis/confusionmatrix.svg")`
+and it would all regenerate.
