@@ -31,7 +31,7 @@ function SatisfierLookup(satisfiers)
     function add_sat!(func)
         # it is a dynamic satisfier
         dynamic === nothing || error("You can only have 1 dynamic satisfier, per folder.")
-        
+
         # Convert the result into an AbstractResolver (static satisfiers do this immediately)
         dynamic = pathpart -> convert(AbstractResolver, func(pathpart))
     end
@@ -97,10 +97,3 @@ function resolve(satisfier_lookup::SatisfierLookup, localdir, pathparts_head, pa
     subdir = mkpath(joinpath(localdir, pathparts_head))
     return resolve(subresolver, subdir, pathparts_tail...)
 end
-
-
-
-
-
-
-

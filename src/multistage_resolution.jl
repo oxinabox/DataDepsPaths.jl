@@ -1,5 +1,4 @@
-
-using DataDeps: run_checksum, run_fetch, run_postfetch
+using DataDeps: run_checksum, run_fetch, run_post_fetch
 
 struct MultistageResolution
     remote_path
@@ -11,6 +10,6 @@ end
 function (msr::MultistageResolution)()
     fetched_paths = run_fetch(msr.fetch_method, msr.remote_path)
     run_checksum(fetched_paths, msr.hash)
-    run_postfetch(msr.path_fetch_method)
+    run_post_fetch(msr.path_fetch_method)
 end
 
